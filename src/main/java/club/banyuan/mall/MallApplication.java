@@ -16,7 +16,7 @@ import java.util.Date;
  * @date 2020/6/9 2:27 下午
  * 描述信息：
  */
-@MapperScan({"club.banyuan.mall.common.mapper"})
+//@MapperScan({"club.banyuan.mall.common.mapper"})
 @SpringBootApplication
 @RestController
 
@@ -39,16 +39,16 @@ public class MallApplication{
 ////        role.setCreateTime(new Date());
 //        roleMapper.insert(role);
 
-        UmsRole role = new UmsRole();
-        role.setName("普通用户");
-        role.setDescription("用户没有介绍");
-        role.setStatus(true);
-        role.setCreateTime(new Date());
-        roleMapper.insert(role);
+//        UmsRole role = new UmsRole();
+//        role.setName("普通用户");
+//        role.setDescription("用户没有介绍");
+//        role.setStatus(true);
+//        role.setCreateTime(new Date());
+//        roleMapper.insert(role);
 
 
-//        UmsRole role = roleMapper.selectByPrimaryKey(1L);
-        roleMapper.selectByPrimaryKey(2L);
+        UmsRole role = roleMapper.selectByPrimaryKey(1L);
+//        roleMapper.selectByPrimaryKey(2L);
 
         return "<p>" + role.toString() + "</p>";
 
@@ -64,5 +64,6 @@ public class MallApplication{
     public String hello2(){
         return "Hello";
     }
+
 }
 

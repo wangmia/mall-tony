@@ -1,9 +1,14 @@
 package club.banyuan.mall.service;
 
 import club.banyuan.mall.common.model.UmsAdmin;
+import club.banyuan.mall.dao.param.AdminQueryParam;
 import club.banyuan.mall.dto.UmsAdminCreateParam;
+import club.banyuan.mall.dto.UmsAdminListResponse;
+import club.banyuan.mall.dto.UmsAdminRoleUpdateParam;
+import club.banyuan.mall.dto.UmsAdminUpdatePasswordParam;
 import club.banyuan.mall.exception.CommonException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author WM
@@ -25,4 +30,16 @@ public interface UmsAdminService {
 
     //  创建用户
     void createUser(UmsAdminCreateParam param) throws CommonException;
+
+    // 管理员修改指定用户的密码
+    void updatePassword(UmsAdminUpdatePasswordParam param) throws CommonException;
+
+    // 用户分页查询
+    UmsAdminListResponse list(AdminQueryParam param);
+
+    /**
+     * 更新用户的角色
+     */
+    @Transactional
+    void roleUpdate(UmsAdminRoleUpdateParam param);
 }
