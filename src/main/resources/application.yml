@@ -7,6 +7,18 @@ spring:
     username: root
     password: wangmiao
 
+redis:
+  host: 127.0.0.1
+  port: 6379
+  database: 1
+  timeout: 300
+  lettuce:
+    pool:
+      max-active: 8
+      max-wait: -1
+      min-idle: 0
+      max-idle: 6
+
 jwt:
   tokenHeader: Authorization #JWT存储的请求头
   secret: ksjdksdkfjdkssjdkfjsdk #JWT加解密使用的密钥

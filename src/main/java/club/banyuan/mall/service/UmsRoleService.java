@@ -1,6 +1,7 @@
 package club.banyuan.mall.service;
 
 import club.banyuan.mall.common.model.UmsRole;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,4 +27,15 @@ public interface UmsRoleService {
      * 查询一个用户的所有角色
      */
     List<UmsRole> findRolesByAdminId(Long adminId);
+
+    /**
+     * 查询所有角色
+     */
+    List<UmsRole> listAll();
+
+    /**
+     * 给角色分配菜单
+     */
+    @Transactional
+    void allocMenu(Long roleId, List<Long> newMenuIds);
 }

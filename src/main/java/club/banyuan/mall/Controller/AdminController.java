@@ -4,6 +4,7 @@ import club.banyuan.mall.common.api.CommonResult;
 import club.banyuan.mall.common.api.ResultCode;
 import club.banyuan.mall.common.mapper.UmsAdminMapper;
 
+import club.banyuan.mall.common.model.UmsAdmin;
 import club.banyuan.mall.common.model.UmsRole;
 import club.banyuan.mall.dao.param.AdminQueryParam;
 import club.banyuan.mall.dto.*;
@@ -128,6 +129,20 @@ public class AdminController {
     public CommonResult roles(@ApiParam(name = "adminId", value = "管理员ID") @PathVariable(value = "adminId") Long adminId) {
         List<UmsRole> roles = roleService.getRolesByAdminId(adminId);
         return CommonResult.success(roles);
+    }
+
+    @ApiOperation(value = "管理员详情接口")
+    @GetMapping(value = "/detail/{id}")
+    public CommonResult userDetail(@PathVariable("id") Long id) {
+        UmsAdmin admin = adminService.getAdminById(id);
+        return CommonResult.success(admin);
+    }
+
+    @ApiOperation(value = "管理员详情接口")
+    @PostMapping(value = "/update")
+    public CommonResult userDetail(@RequestBody UmsAdmin admin) {
+        adminService.updateAdmin(admin);
+        return CommonResult.success("OK");
     }
 
 }

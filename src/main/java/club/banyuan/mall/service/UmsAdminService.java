@@ -17,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface UmsAdminService {
 
-    /**
-     * 根据用户名获取后台管理员
-     */
+    // 根据用户名获取后台管理员
     UmsAdmin getAdminByUsername(String username);
 
     //  登录
@@ -37,9 +35,13 @@ public interface UmsAdminService {
     // 用户分页查询
     UmsAdminListResponse list(AdminQueryParam param);
 
-    /**
-     * 更新用户的角色
-     */
+    // 更新用户的角色
     @Transactional
     void roleUpdate(UmsAdminRoleUpdateParam param);
+
+    // 根据ID查询管理员
+    UmsAdmin getAdminById(Long id);
+
+    // 根据ID更新管理员
+    UmsAdmin updateAdmin(UmsAdmin admin);
 }

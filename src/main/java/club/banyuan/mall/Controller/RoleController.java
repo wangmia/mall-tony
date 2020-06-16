@@ -6,10 +6,11 @@ import club.banyuan.mall.service.UmsRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author WM
@@ -30,5 +31,28 @@ public class RoleController {
     public CommonResult create(@RequestBody UmsRole role) {
         roleService.create(role);
         return CommonResult.success("OK");
+    }
+
+
+    @ApiOperation(value = "给角色分配菜单")
+    @PostMapping(value = "allocMenu")
+    public CommonResult allocMenu(
+            @RequestParam("roleId") Long roleId,
+            @RequestParam("menuIds") String menuIds) {
+
+        List<String> tmpMenuIds = Arrays.asList(menuIds.split(","));
+        List<Long> todoMenuIds = new ArrayList<>();
+        for (String tmpMenuId : tmpMenuIds) {
+            todoMenuIds.add(Long.parseLong(tmpMenuId));
+        }
+        roleService.allocMenu(roleId, todoMenuIds);
+        return CommonResult.success("OK");
+    }
+
+    @GetMapping(value = "/listAll")
+    public CommonResult listAll() {
+
+        List<UmsRole> roles = roleService.listAll();
+        return CommonResult.success(roles);
     }
 }

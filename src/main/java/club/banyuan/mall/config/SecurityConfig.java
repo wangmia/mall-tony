@@ -63,7 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             // 测试 URL
             "/hello",
-            "/api/admin/create"
+            "/api/admin/create",
+            "/hello",
+            "/admin/**",
+            "/role/**"
     };
 
     @Override

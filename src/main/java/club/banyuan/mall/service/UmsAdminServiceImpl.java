@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -192,5 +194,21 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         }
 
     }
+
+    @Cacheable(key = "':getAdminById:'+#id", cacheNames = "ums")
+    @Override
+    public UmsAdmin getAdminById(Long id) {
+        System.out.println("[查询数据库] getAdminById:" + id);
+        return adminMapper.selectByPrimaryKey(id);
+    }
+
+    @CachePut(key = "':getAdminById:'+#admin.id", cacheNames = "ums")
+    @Override
+    public UmsAdmin updateAdmin(UmsAdmin admin) {
+        System.out.println("[更新数据库] updateAdminById:" + admin.getId());
+        adminMapper.updateByPrimaryKeySelective(admin);
+        return adminMapper.selectByPrimaryKey(admin.getId());
+    }
+
 
 }
