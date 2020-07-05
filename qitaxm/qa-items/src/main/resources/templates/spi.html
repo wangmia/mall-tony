@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>问答系统 </title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>问题列表</h1>
+            <ul class="list-group" id="questionList">
+            </ul>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 30px;">
+        <div class="col">
+            <div class="card">
+                <div class="card-header" id="questionTitle"></div>
+                <div class="card-body" id="questionContent"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    $.get('/api/question/list', function (resp) {
+        console.info(resp);
+        if (resp.code === 200) {
+            var html = '';
+            resp.data.map(function (item) {
+                html += '<li class="list-group-item d-flex justify-content-between align-items-center">'
+                    + '<button class="btn btn-primary question-item" data-id="' + item.id + '">查看</button>'
+                    + item.title +
+                    '<span class="badge badge-primary badge-pill">' + item.views + '</span>' +
+                    '</li>';
+            });
+            $('#questionList').html(html);
+        }
+    });
+
+    $(document).delegate('.question-item', 'click', function () {
+        var id = $(this).data('id');
+        console.info(id);
+        $.get('/api/question/detail/' + id, function (resp) {
+            console.info(resp);
+            if (resp.code === 200) {
+                $('#questionTitle').html(resp.data.title);
+                $('#questionContent').html(resp.data.content);
+            }
+        });
+
+        // 加载回答...
+    });
+
+    // $.ajax({
+    //
+    // });
+</script>
+</body>
+</html>
